@@ -1,3 +1,6 @@
+/**
+ TITLE: C Reverse Shell Example
+ Author: Guillem Alminyana
  License: GPLv3 or Later
  Description: Connects using sockets to a IP and spawns a shell
 
