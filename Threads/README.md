@@ -48,7 +48,8 @@ Where:
   - PTHREAD_EXPLICIT_SCHED, PTHREAD_INHERIT_SCHED
   - POSIX_THREAD_ATTR_STACKADDR
   - PTHREAD_STACK_SIZE 
- 
+- `start_routine`: Function to call for the thread. PArameters always is a `(void *)`
+- `arg`: Arguments, if required, for the thread
  
  #### Thread Termination
  Call the following function inside the thread to terminate:
