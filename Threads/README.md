@@ -31,7 +31,7 @@ Lib `pthread.h` is required:
 ### Thread Creation and Termination
 ---
 
-``pthread.h` defines a `pthread_t` type. 
+`pthread.h` defines a `pthread_t` type. 
 
 #### Thread Creation
 ````c 
@@ -43,11 +43,11 @@ Where:
 
 - `thread`: Returns the thread id
 - `attr`: Thread attributes. Set to NULL for default attributes. Options can be:
- - PTHREAD_CREATE_JOINABLE
- - PTHREAD_INHERIT_SCHED,PTHREAD_EXPLICIT_SCHED,SCHED_OTHER
- - PTHREAD_EXPLICIT_SCHED, PTHREAD_INHERIT_SCHED
- - POSIX_THREAD_ATTR_STACKADDR
- - PTHREAD_STACK_SIZE 
+ -- PTHREAD_CREATE_JOINABLE
+ -- PTHREAD_INHERIT_SCHED,PTHREAD_EXPLICIT_SCHED,SCHED_OTHER
+ -- PTHREAD_EXPLICIT_SCHED, PTHREAD_INHERIT_SCHED
+ -- POSIX_THREAD_ATTR_STACKADDR
+ -- PTHREAD_STACK_SIZE 
  
  
  #### Thread Termination
