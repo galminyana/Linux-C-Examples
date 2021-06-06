@@ -103,7 +103,12 @@ Where `thread` is the thread id and `retval` usually is NULL. When not NULL, `re
 ---
 TBD
 
-
+### Compile and Link
+---
+To compile a multithread code, have to link it with the `pthreads` library:
+```bash
+# gcc multithread.c -lpthread
+```
 ### References
 ---
 
