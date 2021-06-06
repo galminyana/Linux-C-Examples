@@ -58,3 +58,48 @@ Where:
  ```
  
  This kills the thread, and this function never returns. If required, returned value can be checked from another thread using `pthread_join` if the thread is not dettached.
+
+### Thread Synchronization
+---
+Can be done by:
+- Mutexes - Mutual exclusion lock. Enforces exclusive access by a thread to a variable or set of variables.
+- Joins - Make a thread wait till others are complete (terminated).
+- Condition variables - data type pthread_cond_t
+
+#### Mutexes
+To create and initialize a mutex:
+```c
+int  pthread_mutex_init(pthread_mutex_t * mutex, const pthread_mutexattr_t * attr);
+```
+Or using the following macro:
+```c 
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+```
+To lock the mutex:
+```c
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+```
+To unlock the mutex:
+```c
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+```
+Also the following function acts like `pthread_mutex_lock` but if the mutex is already locked, the function exits:
+```c
+int pthread_mutex_trylock(pthread_mutex_t *mutex);
+```
+
+#### Joins
+Used when one thread wants to wait to another to finish. Using:
+```c
+int pthread_join(pthread_t thread, void **retval);
+```
+Where `thread` is the thread id and `retval` usually is NULL. When not NULL, `retval` gets the value passed on to `pthread_exit` 
+
+#### Condition Vars
+TBD
+
+
+### References
+---
+
+- [POSIX Threads Libraries](https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html)
