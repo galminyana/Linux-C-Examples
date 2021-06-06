@@ -34,6 +34,7 @@ Lib `pthread.h` is required:
 `pthread.h` defines a `pthread_t` type. 
 
 #### Thread Creation
+---
 ````c 
 int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
                    void *(*start_routine) (void *), void *arg);
@@ -52,6 +53,7 @@ Where:
 - `arg`: Arguments, if required, for the thread
  
  #### Thread Termination
+ ---
  Call the following function inside the thread to terminate:
  ```c 
  void pthread_exit(void *retval);
@@ -67,6 +69,7 @@ Can be done by:
 - Condition variables - data type pthread_cond_t
 
 #### Mutexes
+---
 To create and initialize a mutex:
 ```c
 int  pthread_mutex_init(pthread_mutex_t * mutex, const pthread_mutexattr_t * attr);
@@ -89,6 +92,7 @@ int pthread_mutex_trylock(pthread_mutex_t *mutex);
 ```
 
 #### Joins
+---
 Used when one thread wants to wait to another to finish. Using:
 ```c
 int pthread_join(pthread_t thread, void **retval);
@@ -96,6 +100,7 @@ int pthread_join(pthread_t thread, void **retval);
 Where `thread` is the thread id and `retval` usually is NULL. When not NULL, `retval` gets the value passed on to `pthread_exit` 
 
 #### Condition Vars
+---
 TBD
 
 
