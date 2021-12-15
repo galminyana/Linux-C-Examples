@@ -25,7 +25,7 @@ void * Thread_Function ( void * ptr)
 
 int main (void)
 {
-        int ret1, ret2;
+    int ret1, ret2;
 	pthread_t thread_1, thread_2;                   		//<- ID for the threads
 
 
